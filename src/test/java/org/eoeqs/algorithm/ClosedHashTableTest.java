@@ -1,5 +1,6 @@
 package org.eoeqs.algorithm;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,9 +10,11 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("Tests for ClosedHashTable functionality")
 public class ClosedHashTableTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Search for key {0} should return {1}")
+    @DisplayName("Test insertion and search without collisions")
     @CsvSource({
             "1, true",
             "2, true",
@@ -26,7 +29,8 @@ public class ClosedHashTableTest {
         assertEquals(expected, ht.search(key));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Search for key {0} with collisions should return {1}")
+    @DisplayName("Test insertion and search with collisions")
     @CsvSource({
             "5, true",
             "15, true",
@@ -41,7 +45,8 @@ public class ClosedHashTableTest {
         assertEquals(expected, ht.search(key));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Search for key {1} after inserting {0} should return {2}")
+    @DisplayName("Test insertion with table resizing")
     @MethodSource("provideKeysForResize")
     public void testInsertWithResize(int[] keysToInsert, int keyToSearch, boolean expected) {
         ClosedHashTable ht = new ClosedHashTable();
@@ -59,7 +64,8 @@ public class ClosedHashTableTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Search for key {0} after deletion should return {1}")
+    @DisplayName("Test deletion and subsequent search")
     @CsvSource({
             "5, false",
             "15, true",
@@ -75,7 +81,8 @@ public class ClosedHashTableTest {
         assertEquals(expected, ht.search(key));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Insert duplicate key {0} should be searchable as {1}")
+    @DisplayName("Test insertion of duplicate keys")
     @CsvSource({
             "5, true"
     })
@@ -97,7 +104,8 @@ public class ClosedHashTableTest {
         return count;
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Search for key {0} in empty table should return {1}")
+    @DisplayName("Test search in an empty table")
     @CsvSource({
             "1, false",
             "10, false",
@@ -109,6 +117,7 @@ public class ClosedHashTableTest {
     }
 
     @Test
+    @DisplayName("Test insertion into full table with resizing")
     public void testFullTableWithResize() {
         ClosedHashTable ht = new ClosedHashTable();
         int[] keys = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -120,7 +129,8 @@ public class ClosedHashTableTest {
         }
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Search for key {2} after inserting {0} and deleting {1} should return {3}")
+    @DisplayName("Test multiple insertions and deletions")
     @MethodSource("provideKeysForMultipleOperations")
     public void testMultipleInsertDelete(int[] keysToInsert, int[] keysToDelete, int keyToSearch, boolean expected) {
         ClosedHashTable ht = new ClosedHashTable();

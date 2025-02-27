@@ -1,6 +1,6 @@
 package org.eoeqs.function;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,41 +11,47 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.math.BigInteger;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+@DisplayName("Tests for Secant function implementation")
 public class SecantTest {
 
     private static final double HIGH_PRECISION = 1e-10;
     private static final double MEDIUM_PRECISION = 1e-6;
 
-
-    @ParameterizedTest(name = "sec({0}) ≈ {1} (precision {2})")
+    @ParameterizedTest(name = "sec({0}) should approximate {1} with precision {2}")
+    @DisplayName("Test basic secant values")
     @MethodSource("provideBasicTestCases")
     public void testBasicCases(double x, double expected, double precision) {
-        Assertions.assertEquals(expected, Secant.sec(x), precision);
+        assertEquals(expected, Secant.sec(x), precision);
     }
 
-    @ParameterizedTest(name = "x = {0} should throw")
+    @ParameterizedTest(name = "sec({0}) should throw IllegalArgumentException")
+    @DisplayName("Test invalid arguments causing exceptions")
     @MethodSource("provideInvalidArguments")
     public void testInvalidArguments(double x) {
-        Assertions.assertThrows(
+        assertThrows(
                 IllegalArgumentException.class,
                 () -> Secant.sec(x),
                 "x = " + x + " should throw exception"
         );
     }
 
-    @ParameterizedTest(name = "sec({0}) should be increasing")
+    @ParameterizedTest(name = "sec({0}) < sec({1}) in increasing interval")
+    @DisplayName("Test monotonicity in (0, pi/2)")
     @CsvSource({"0.1, 0.2", "0.5, 0.6", "1.0, 1.1"})
     public void testMonotonicity(double x1, double x2) {
-        Assertions.assertTrue(
+        assertTrue(
                 Secant.sec(x2) > Secant.sec(x1),
                 "Function should be increasing in (0, pi/2)"
         );
     }
 
-    @ParameterizedTest(name = "sec({0}) should be even")
+    @ParameterizedTest(name = "sec({0}) = sec(-{0})")
+    @DisplayName("Test even function property")
     @ValueSource(doubles = {0.1, 0.5, 1.0})
     public void testEvenFunction(double x) {
-        Assertions.assertEquals(
+        assertEquals(
                 Secant.sec(x),
                 Secant.sec(-x),
                 HIGH_PRECISION,
@@ -54,20 +60,22 @@ public class SecantTest {
     }
 
     @Test
+    @DisplayName("Test computation of Euler numbers")
     public void testEulerNumbers() {
-        Assertions.assertEquals(BigInteger.ONE, Secant.computeEulerNumber(0));
-        Assertions.assertEquals(BigInteger.ONE, Secant.computeEulerNumber(1));
-        Assertions.assertEquals(BigInteger.valueOf(5), Secant.computeEulerNumber(2));
+        assertEquals(BigInteger.ONE, Secant.computeEulerNumber(0));
+        assertEquals(BigInteger.ONE, Secant.computeEulerNumber(1));
+        assertEquals(BigInteger.valueOf(5), Secant.computeEulerNumber(2));
     }
 
-    @ParameterizedTest(name = "x near pi/2: {0}")
+    @ParameterizedTest(name = "sec({0}) near discontinuity should not throw")
+    @DisplayName("Test behavior near discontinuities")
     @ValueSource(doubles = {
             Math.PI/2 - 0.0999,
             -Math.PI/2 + 0.0999,
             3*Math.PI/2 - 0.0999
     })
     public void testNearDiscontinuity(double x) {
-        Assertions.assertDoesNotThrow(
+        assertDoesNotThrow(
                 () -> Secant.sec(x),
                 "x = " + x + " should be valid"
         );
