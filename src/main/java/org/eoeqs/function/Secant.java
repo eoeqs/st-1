@@ -25,7 +25,7 @@ public class Secant {
         double xSquared = x * x;
         double xPower = 1.0;
         int n = 0;
-        final double epsilon = 1e-15;
+        final double epsilon = 1e-16;
         double prevSum;
 
         do {
@@ -47,7 +47,7 @@ public class Secant {
             sum += term;
             n++;
             xPower *= xSquared;
-        } while (n < 100_000 && Math.abs(sum - prevSum) > epsilon);
+        } while (n < 1_000_000 && Math.abs(sum - prevSum) > epsilon);
 
         return sum;
     }

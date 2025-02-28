@@ -84,12 +84,12 @@ public class SecantTest {
     private static Stream<Arguments> provideBasicTestCases() {
         return Stream.of(
                 Arguments.of(0, 1.0, HIGH_PRECISION),
-                Arguments.of(Math.PI/6, 1.0/Math.cos(Math.PI/6), HIGH_PRECISION),
-                Arguments.of(-Math.PI/6, 1.0/Math.cos(-Math.PI/6), HIGH_PRECISION),
-                Arguments.of(0.1, 1.0/Math.cos(0.1), HIGH_PRECISION),
-                Arguments.of(Math.PI/4, 1.0/Math.cos(Math.PI/4), MEDIUM_PRECISION),
-                Arguments.of(2*Math.PI - 0.1, 1.0/Math.cos(2*Math.PI - 0.1), HIGH_PRECISION),
-                Arguments.of(-2*Math.PI + 0.1, 1.0/Math.cos(-2*Math.PI + 0.1), HIGH_PRECISION)
+                Arguments.of(Math.PI / 6, 1.15470053838, HIGH_PRECISION),
+                Arguments.of(-Math.PI / 6, 1.15470053838, HIGH_PRECISION),
+                Arguments.of(0.1, 1.005020918400455, HIGH_PRECISION),
+                Arguments.of(Math.PI / 4, 1.41421356237, MEDIUM_PRECISION),
+                Arguments.of(2 * Math.PI - 0.1, 1.005020918400455, HIGH_PRECISION),
+                Arguments.of(-2 * Math.PI + 0.1, 1.005020918400455, HIGH_PRECISION)
         );
     }
 

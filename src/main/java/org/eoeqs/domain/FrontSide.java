@@ -19,9 +19,6 @@ public class FrontSide {
         return meltedDegree;
     }
 
-    public double getMeltingPoint() {
-        return meltingPoint;
-    }
 
     public void updateMeltingState(double temperature) {
         if (temperature >= meltingPoint) {

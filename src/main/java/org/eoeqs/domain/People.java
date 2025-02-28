@@ -11,15 +11,8 @@ public class People {
         this.waitingFor = waitingFor;
     }
 
-    public String getPosition() {
-        return position;
-    }
-
     public String getGroupDensity() {
         return groupDensity;
     }
 
-    public String getWaitingFor() {
-        return waitingFor;
-    }
 }

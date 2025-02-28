@@ -15,13 +15,6 @@ public class Bombardment {
         return isActive;
     }
 
-    public String getIntensity() {
-        return intensity;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
 
     public double calculateTemperature() {
         double baseTemp = intensity.equals("high") ? 1000 : 500;
